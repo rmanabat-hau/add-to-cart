@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const VOUCHER = "10OFF";
 const sampleProducts = [
   {
@@ -20,9 +22,14 @@ const sampleProducts = [
     description: "Music Giver",
     price: "99",
   },
+  {
+    name: "AirPods",
+    description: "Music Giver",
+    price: "99",
+  },
 ];
 
-const useCart = () => {
+export const useCart = () => {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
   const [voucher, setVoucher] = useState("");
@@ -72,4 +79,27 @@ const useCart = () => {
     setCart([]);
     setTotalAmount(0);
   };
+
+  return {
+    products,
+    cart,
+    voucher,
+    loading,
+    error,
+    totalAmount,
+
+    setProducts,
+    setCart,
+    setVoucher,
+    setLoading,
+    setError,
+    setTotalAmount,
+
+    fetchAllProducts,
+    fetchCart,
+    handleAddToCart,
+    handleApplyVoucher,
+    handleBuy,
+    handleClearVoucher
+}
 };

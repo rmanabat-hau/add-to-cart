@@ -1,37 +1,18 @@
+import { useEffect } from "react";
+import { useCartContext } from "../../context/CartContext";
 import ProductItem from "./ProductItem";
 
-const sampleProducts = [
-  {
-    name: "Laptop",
-    description: "Foldable Computer",
-    price: "999",
-  },
-  {
-    name: "Headphones",
-    description: "Music Listening Device",
-    price: "199",
-  },
-  {
-    name: "Phone",
-    description: "Mini Computer",
-    price: "499",
-  },
-  {
-    name: "Speaker",
-    description: "Music Giver",
-    price: "99",
-  },
-  {
-    name: "Airpods",
-    description: "Music Giver",
-    price: "99",
-  },
-];
-
 const ProductsSection = () => {
+  const {products, fetchAllProducts } = useCartContext()
+
+
+  useEffect(()=>{
+    console.log(products)
+    fetchAllProducts()
+  }, [products])
   return (
     <div className="grid grid-cols-2">
-      {sampleProducts.map((product) => {
+      {products?.map((product) => {
         return (
           <ProductItem
             name={product.name}

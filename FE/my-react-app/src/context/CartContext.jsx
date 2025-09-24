@@ -1,4 +1,5 @@
 import { createContext, useContext } from "react";
+import { useCart } from "../hooks/useCart";
 
 const CartContext = createContext(undefined);
 
