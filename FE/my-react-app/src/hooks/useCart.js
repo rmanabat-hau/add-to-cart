@@ -59,9 +59,9 @@ const useCart = () => {
     let totalAmount;
 
     products.forEach(
-      (product = {
-        // totalAmount = totalAmount + product.price
-      })
+      (product =>
+        totalAmount = totalAmount + product.price
+      )
     );
 
     setTotalAmount(totalAmount);

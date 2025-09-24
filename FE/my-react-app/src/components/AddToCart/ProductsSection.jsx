@@ -21,6 +21,11 @@ const sampleProducts = [
     description: "Music Giver",
     price: "99",
   },
+  {
+    name: "Airpods",
+    description: "Music Giver",
+    price: "99",
+  },
 ];
 
 const ProductsSection = () => {
