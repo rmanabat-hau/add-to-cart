@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const VOUCHER = "10OFF";
 const sampleProducts = [
@@ -53,9 +53,9 @@ export const useCart = () => {
     setCart(newCart);
   };
 
-  const handleApplyVoucher = async (appliedVoucher) => {
+  const handleApplyVoucher = async () => {
     // TODO: check voucher if valid from BE
-    if (appliedVoucher === VOUCHER) {
+    if (voucher === VOUCHER) {
       const newTotal = totalAmount - totalAmount * 0.1;
       setTotalAmount(newTotal);
     }
@@ -63,9 +63,9 @@ export const useCart = () => {
 
   const handleClearVoucher = async () => {
     setVoucher("");
-    let totalAmount;
+    let totalAmount = 0;
 
-    products.forEach(
+    cart.forEach(
       (product =>
         totalAmount = totalAmount + product.price
       )
@@ -79,6 +79,24 @@ export const useCart = () => {
     setCart([]);
     setTotalAmount(0);
   };
+
+  const handleComputeTotalAmount = () => {
+    let totalAmount = 0;
+
+    console.log(cart)
+
+    cart.forEach(
+      (product =>
+        totalAmount = totalAmount + product.price
+      )
+    );
+
+    setTotalAmount(totalAmount)
+  }
+
+  useEffect(() => {
+handleComputeTotalAmount()
+  }, [cart])
 
   return {
     products,

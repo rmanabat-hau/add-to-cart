@@ -7,9 +7,8 @@ const ProductsSection = () => {
 
 
   useEffect(()=>{
-    console.log(products)
     fetchAllProducts()
-  }, [products])
+  }, [])
   return (
     <div className="grid grid-cols-2">
       {products?.map((product) => {

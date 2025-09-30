@@ -1,7 +1,15 @@
+import { useCartContext } from "../../context/CartContext";
 const ProductItem = ({ name, description, price }) => {
-  const handleAddToCart = () => {
-    console.log("Added To Cart: ", name);
-  };
+  const {handleAddToCart} = useCartContext();
+
+  const onAddToCartClick = () => {
+    const product = {
+      name,
+      price: Number(price),
+      description
+    }
+    handleAddToCart(product)
+  }
 
   return (
     <div className="m-1 rounded border p-3 bg-gray-500 space-y-2 text-white">
@@ -12,7 +20,7 @@ const ProductItem = ({ name, description, price }) => {
       <div>{description}</div>
       <div>
         <button
-          onClick={handleAddToCart}
+          onClick={onAddToCartClick}
           className="bg-blue-500 w-full font-bold"
         >
           ADD TO CART
