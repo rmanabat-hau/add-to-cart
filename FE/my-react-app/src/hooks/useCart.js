@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { addToCart, checkoutCart, getAllProducts, getCart, validateVoucher } from "../api/cart";
 
 const VOUCHER = "10OFF";
 const sampleProducts = [
@@ -38,26 +39,65 @@ export const useCart = () => {
   const [totalAmount, setTotalAmount] = useState(0);
 
   const fetchAllProducts = async () => {
-    // TODO: fetch from BE
-    setProducts(sampleProducts);
+    setLoading(true)
+    setError(false)
+    try {
+      const products = await getAllProducts() 
+      setProducts(products)
+    } catch (e) {
+      // set sample products on error
+      setError(true)
+      setProducts(sampleProducts);
+    } finally {
+      setLoading(false)
+    }
   };
 
   const fetchCart = async () => {
-    // TODO: fetch from BE
-    setCart([]);
+    setLoading(true)
+    setError(false)
+    try {
+      const cart = await getCart()
+      setCart(cart);
+    } catch (e) {
+      setError(true)
+      // set empty cart on error
+      setCart([])
+    } finally {
+      setLoading(false)
+    }
   };
 
   const handleAddToCart = async (product) => {
-    // TODO: save cart to BE
-    const newCart = [...cart, product];
-    setCart(newCart);
+    setLoading(true)
+    setError(false)
+
+    try {
+      await addToCart(product)
+      const newCart = [...cart, product];
+      setCart(newCart);
+    } catch (e) {
+      setError(true)
+    } finally {
+      setLoading(false)
+    }
+    
   };
 
   const handleApplyVoucher = async () => {
-    // TODO: check voucher if valid from BE
-    if (voucher === VOUCHER) {
-      const newTotal = totalAmount - totalAmount * 0.1;
-      setTotalAmount(newTotal);
+    setLoading(true)
+    setError(false)
+
+    try {
+      const voucher = await validateVoucher(voucher)
+      if (voucher.isValid === true) {
+        const newTotal = totalAmount - totalAmount * voucher.discount;
+        setTotalAmount(newTotal);
+      }
+    } catch (e) {
+      setError(true)
+    } finally {
+      setLoading(false)
     }
   };
 
@@ -75,9 +115,18 @@ export const useCart = () => {
   };
 
   const handleBuy = async () => {
-    // TODO: call buy api
-    setCart([]);
-    setTotalAmount(0);
+    setLoading(true)
+    setError(false)
+
+    try {
+      await checkoutCart()
+      setCart([]);
+      setTotalAmount(0);
+    } catch (e) {
+      setError(true)
+    } finally {
+      setLoading(false)
+    }
   };
 
   const handleComputeTotalAmount = () => {
