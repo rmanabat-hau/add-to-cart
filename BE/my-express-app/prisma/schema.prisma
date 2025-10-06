@@ -12,4 +12,11 @@ model Product {
   name        String
   description String
   price       Float
+  cart        Cart? @relation(fields: [cartId], references: [id])
+  cartId      Int?
+}
+
+model Cart {
+  id          Int     @id @default(autoincrement())
+  products    Product[]
 }
